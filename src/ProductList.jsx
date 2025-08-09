@@ -9,7 +9,6 @@ function ProductList({ onHomeClick }) {
 		(false); // State to control the visibility of the About Us page
 	const dispatch = useDispatch();
 	const cartItems = useSelector(state => state.cart.items);
-	console.log(`cartItems: ${cartItems}`);
 	const [addedToCart, setAddedToCart] = useState({});
 	const calculateTotalQuantity = () => {
 		return cartItems ? cartItems.reduce((total, item) => total + item.quantity, 0) : 0;
@@ -263,9 +262,6 @@ function ProductList({ onHomeClick }) {
 			...prevState,
 			[product.name]: true,	
 		}))
-		
-		console.log("addedToCart is below ");
-		console.log(addedToCart);
 	};
 
 	
@@ -315,7 +311,6 @@ function ProductList({ onHomeClick }) {
 			{!showCart ? (
 				<div className="product-grid">
 					{plantsArray.map((category, index) => {
-						//console.log(`item: ${item}`));
 						return (
 							<div key={index}>
 								<h1>
