@@ -29,16 +29,16 @@ const CartItem = ({ onContinueShopping }) => {
 
 	const handleIncrement = (item) => {
 		dispatch(incrementQuantity(item));
-		calculateTotalAmount();
+		// dispatch(updateQuantity(item))
 	};
 
 	const handleDecrement = (item) => {
 		if(item.quantity < 0) {
-			dispatch(removeItem(item.name));
+			dispatch(removeItem(item));
 		} else {
 			dispatch(decrementQuantity(item));
 		}
-		calculateTotalAmount();
+		// calculateTotalAmount();
 	};
 	
 
@@ -51,7 +51,8 @@ const CartItem = ({ onContinueShopping }) => {
 		let totalCost = 0;
 		console.log(`calculateTotalCost was just invoked`);
 		let {cost, quantity} = item;
-		let itemCost = parseInt(cost.split('$')[1] || 0);
+		// let itemCost = parseInt(cost.split('$')[1] || 0);
+		let itemCost = parseFloat(item.cost.substring(1));
 		totalCost = itemCost * Number(quantity);
 		
 		return totalCost;
