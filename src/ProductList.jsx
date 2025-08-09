@@ -8,8 +8,9 @@ function ProductList({ onHomeClick }) {
 	const [showPlants, setShowPlants] = useState
 		(false); // State to control the visibility of the About Us page
 	const dispatch = useDispatch();
-	const plantItems = useSelector(state => state.case);
-	console.log(`plantItems: ${plantItems}`);
+	const plantItems = useSelector(state => state.items);
+	const cartItems = useSelector(state => state.cart.items);
+	console.log(`cartItems: ${cartItems}`);
 	const [addedToCart, setAddedToCart] = useState({});
 
 	const plantsArray = [
@@ -255,20 +256,21 @@ function ProductList({ onHomeClick }) {
 	};
 	const handleAddToCart = (product) => {
 		dispatch(addItem(product));
-
+		
 		setAddedToCart((prevState) => ({
 			...prevState,
-			[product.name]: true
+			[product.name]: true,	
 		}))
+		
+		console.log("addedToCart is below ");
+		console.log(addedToCart);
 	};
+
+	
 	const handleContinueShopping = (e) => {
 		e.preventDefault();
 		setShowCart(false);
 	};
-
-	// const isInCart = () => {
-
-	// }
 
 	return (
 		<div>
@@ -319,9 +321,11 @@ function ProductList({ onHomeClick }) {
 													{plant.cost}
 												</div>
 												<button
-													className="product-button"
+													className={`product-button ${cartItems.some(item => item.name === plant.name) ? 'disabled' : ''}`}
 													onClick={() =>	handleAddToCart(plant)} // Handle adding plant to cart
-												>Add to Cart</button>
+													disabled={cartItems.some(item => item.name === plant.name)}>
+														{cartItems.some(item => item.name === plant.name) ? 'Added' : 'Add to Cart'}
+												</button>
 											</li>
 										);
 									})}
